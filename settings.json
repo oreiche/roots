@@ -1,4 +1,6 @@
 {
-    "namespace": "generics",
-    "variables": []
+    "variables": [
+        "series=stonking",
+        "channel=daily"
+    ]
 }

@@ -1,0 +1,7 @@
+# Path                              # Owners
+/core/                              @ubuntu/release-management
+/ubuntu/                            @ubuntu/desktop-team
+/ubuntu-server/                     @ubuntu/server-team
+/ubuntu-mini-iso/                   @ubuntu/release-management
+/ubuntu-budgie/                     @ubuntu/budgie-lead
+/ubuntu-mate/                       @ubuntu/mate-lead
