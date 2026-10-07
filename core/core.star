@@ -73,6 +73,7 @@ def test_static_validation_job(name, stage, deps):
         type="generic",
         call=test_static_validation_task,
         deps=deps,
+        queue="utah",
     )
 
 # Register and return a new extensive test job (mockup using sleep, placeholder for now)
