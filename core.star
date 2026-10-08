@@ -27,7 +27,6 @@ def toupper(name, stage, deps):
         root = {}
         outfiles = {}
         for info in dep_infos:
-            print(info)
             data = info["data"]
             artifacts = info["artifacts"]
             if "filegen" in data:
