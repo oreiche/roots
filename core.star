@@ -6,7 +6,7 @@ def filegen(name, stage, filenames):
     def filegen_task(dep_infos):
         return {
             # generic-task-specific vars
-            "root": {},
+            "inputs": {},
             "env": {},
             "cmds": [ "echo '{}' > '{}'".format(f.split('.')[0], f)
                       for f in filenames] + ["sleep 5"],
@@ -41,7 +41,7 @@ def toupper(name, stage, deps):
                         fail("toupper failed with conflict on {}".format(outfile))
                     outfiles[outfile] = infile
         return {
-            "root": root,
+            "inputs": root,
             "env": {},
             "cmds": [ "cat {} | tr 'a-z' 'A-Z' > {}".format(inf, outf)
                       for outf, inf in outfiles.items()] + ["sleep 5"],
