@@ -1,0 +1,9 @@
+repos:
+    - repo: local
+      hooks:
+          - id: verify-eval
+            name: verify-eval
+            entry: zazu eval .
+            language: system
+            files: \.star$
+            pass_filenames: false
