@@ -1,0 +1,24 @@
+repos:
+    - repo: local
+      hooks:
+          - id: verify-eval
+            name: verify-eval
+            entry: bash
+            # do a matrix test across supported series and channels
+            args:
+              - -c
+              - |
+                set -euo pipefail
+
+                SERIES=("resolute" "stonking")
+                CHANNELS=("daily" "release")
+
+                for s in "${SERIES[@]}"; do
+                  for c in "${CHANNELS[@]}"; do
+                    echo "==> series='$s', channel='$c'"
+                    zazu eval . --set "series=$s" --set "channel=$c"
+                  done
+                done
+            language: system
+            files: \.star$
+            pass_filenames: false
