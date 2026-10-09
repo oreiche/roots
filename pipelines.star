@@ -1,4 +1,4 @@
-load("core.star", "filegen", "toupper")
+load("core.star", "greeter", "toupper")
 
 def register_pipelines():
     return [
@@ -7,29 +7,39 @@ def register_pipelines():
             name="pipeline",
             stages=["generate", "modify"],
             jobs=[
-                filegen(
+                greeter(
                     name="foo",
                     stage="generate",
-                    filenames=["foo.txt"],
+                    greets=["foo"],
                 ),
-                filegen(
+
+                # 'greeter' can produce multiple files
+                greeter(
                     name="bar_and_baz",
                     stage="generate",
-                    filenames=["bar.txt", "baz.txt"],
+                    greets=["bar", "baz"],
                 ),
-                # Try adding more 'filegen' jobs (with different filenames).
-                # filegen(
-                #     name="qux",
-                #     stage="generate",
-                #     filenames=["qux.txt"],
-                # ),
-                #
-                # The 'toupper' template will automatically handle the new file
-                # after you added the new job as a dependency.
+
+                # Try a third job (more input files for 'toupper').
+                #greeter(
+                #    name="qux",
+                #    stage="generate",
+                #    greets=["qux"],
+                #),
+
+                # Try a conflicting job ('toupper's inputs conflict on 'bar').
+                #greeter(
+                #    name="bar",
+                #    stage="generate",
+                #    greets=["bar"],
+                #),
+
+                # The 'toupper' template will automatically handle new input
+                # files after their jobs have been added to the dependency list.
                 toupper(
                     name="upper",
                     stage="modify",
-                    deps=["foo", "bar_and_baz"]
+                    deps=["foo", "bar_and_baz"] # + ["qux", "bar"]
                 ),
             ]
         )
