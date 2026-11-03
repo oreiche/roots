@@ -2,7 +2,7 @@
 DEBUG_FAKE_BUILD_LIVEFS = False
 
 # Constructor for a product definition (only accept arguments supported by build_image_job, see below)
-def image_product(project, subproject, arch, subarch="", pocket="Updates", timeout=2*60*60):
+def image_product(project, subproject, arch, subarch="", pocket="Updates", timeout=6*60*60):
     return dict(
         project=project,
         subproject=subproject,

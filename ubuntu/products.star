@@ -5,7 +5,7 @@ def products(series):
     products = [
         image_product(project="ubuntu", subproject="live", arch="amd64"),
         image_product(project="ubuntu", subproject="live", arch="arm64"),
-        image_product(project="ubuntu", subproject="live", arch="riscv64", timeout=12*60*60),
+        image_product(project="ubuntu", subproject="live", arch="riscv64", timeout=24*60*60),
         image_product(project="ubuntu", subproject="preinstalled", arch="arm64", subarch="raspi"),
     ]
 

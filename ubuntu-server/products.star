@@ -8,10 +8,10 @@ def products(series):
         image_product(project="ubuntu-server", subproject="live", arch="arm64", subarch="largemem"),
         image_product(project="ubuntu-server", subproject="live", arch="ppc64el"),
         image_product(project="ubuntu-server", subproject="live", arch="s390x"),
-        image_product(project="ubuntu-server", subproject="live", arch="riscv64", timeout=12*60*60),
+        image_product(project="ubuntu-server", subproject="live", arch="riscv64", timeout=24*60*60),
 
         image_product(project="ubuntu-server", subproject="preinstalled", arch="amd64", subarch="generic"),
-        image_product(project="ubuntu-server", subproject="preinstalled", arch="riscv64", subarch="generic", timeout=12*60*60),
+        image_product(project="ubuntu-server", subproject="preinstalled", arch="riscv64", subarch="generic", timeout=24*60*60),
         image_product(project="ubuntu-server", subproject="preinstalled", arch="arm64", subarch="generic"),
         image_product(project="ubuntu-server", subproject="preinstalled", arch="arm64", subarch="raspi"),
     ]
