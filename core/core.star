@@ -1,6 +1,3 @@
-# Debug option to replace real image builds by downloads from cdimage
-DEBUG_FAKE_BUILD_LIVEFS = False
-
 # Constructor for a product definition (only accept arguments supported by build_image_job, see below)
 def image_product(project, subproject, arch, subarch="", pocket="Updates", timeout=6*60*60):
     return dict(
@@ -14,8 +11,6 @@ def image_product(project, subproject, arch, subarch="", pocket="Updates", timeo
 
 # Register and return a new image build job (via builtin 'build_livefs')
 def build_image_job(name, stage, series, product):
-    if DEBUG_FAKE_BUILD_LIVEFS:
-        return fake_build_image_job(name, stage, series, product)
     return job(
             name=name,
             stage=stage,
@@ -95,47 +90,4 @@ def test_release_job(name, stage, deps):
         type="generic",
         call=test_release_task,
         deps=deps,
-    )
-
-# Register fake image build job: uses generic job producing the same output
-def fake_build_image_job(name, stage, series, product):
-    def fake_build_livefs(dep_infos):
-        project = product["project"]
-        subproject = product["subproject"]
-        arch = product["arch"]
-
-        isoname = 'MISSING'
-        if project == 'ubuntu':
-            isoname = '{}-desktop-{}.iso'.format(series, arch)
-        elif project == 'ubuntu-server':
-            isoname = '{}-{}-server-{}.iso'.format(series, subproject, arch)
-        url = 'https://cdimage.ubuntu.com/{}/{}/daily-{}/current/{}'.format(project, series, subproject, isoname)
-
-        image = 'livecd.{}.iso'.format(project)
-        manifest = 'livecd.{}.manifest'.format(project)
-
-        outs = [image, manifest, 'build.log']
-        cmds = [
-            'touch {} build.log'.format(manifest),
-            'wget {} -O {} >/dev/null 2>&1'.format(url, image),
-        ]
-        return {
-            "inputs": {},
-            "outputs": outs,
-            "data": {
-                "build_livefs": {
-                    "image": 'livecd.{}.iso'.format(product["project"]),
-                    "manifest": 'livecd.{}.manifest'.format(product["project"]),
-                    "build_log": 'build.log',
-                }
-            },
-            "env": {},
-            "cmds": cmds,
-        }
-    return job(
-        name=name,
-        stage=stage,
-        type="generic",
-        call=fake_build_livefs,
-        deps=[],
     )

@@ -8,23 +8,20 @@ load("ubuntu-mini-iso/products.star", miniiso_defs="defs")
 load("ubuntu-budgie/products.star", budgie_defs="defs")
 load("ubuntu-mate/products.star", mate_defs="defs")
 
+# globals
+SERIES = "resolute"
+
 
 # helper function for parsing mandatory configuration values
-def parse_env():
-    series = getenv("series")
+def get_channel():
     channel = getenv("channel")
-
-    if not series:
-        fail("mandatory series variable is missing")
-    elif series not in ["resolute", "stonking"]:
-        fail("unknown series '{}', supported values are: 'resolute', 'stonking'".format(series))
 
     if not channel:
         fail("mandatory channel variable is missing")
     elif channel not in ["daily", "release"]:
         fail("unknown channel '{}', supported values are: 'daily', 'release'".format(channel))
 
-    return series, channel
+    return channel
 
 
 # helper function for generating non-conflicting pipeline name from product
@@ -39,22 +36,22 @@ def register_pipelines():
     pipelines = []
 
     # parse configuration variables from env
-    series, channel = parse_env()
+    channel = get_channel()
 
     for defs in [ubuntu_defs, server_defs, miniiso_defs, budgie_defs, mate_defs]:
-        for product in defs.products(series):
+        for product in defs.products():
             # add image build job for product
             jobs = [
                 build_image_job(
                     name="build_image",
                     stage="build",
-                    series=series,
+                    series=SERIES,
                     product=product,
                 ),
             ]
 
             # add tests jobs defined by product
-            jobs += defs.test_jobs(series, channel, "build_image")
+            jobs += defs.test_jobs(channel, "build_image")
 
             # create and add pipeline with defined jobs
             pipelines += [
