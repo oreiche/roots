@@ -41,12 +41,8 @@ def register_pipelines():
     # parse configuration variables from env
     series, channel = parse_env()
 
-    for proddef in [ubuntu_defs, server_defs, miniiso_defs, budgie_defs, mate_defs]:
-        # unpack functions
-        products = proddef["products"]
-        test_jobs = proddef["test_jobs"]
-
-        for product in products(series):
+    for defs in [ubuntu_defs, server_defs, miniiso_defs, budgie_defs, mate_defs]:
+        for product in defs.products(series):
             # add image build job for product
             jobs = [
                 build_image_job(
@@ -58,7 +54,7 @@ def register_pipelines():
             ]
 
             # add tests jobs defined by product
-            jobs += test_jobs(series, channel, "build_image")
+            jobs += defs.test_jobs(series, channel, "build_image")
 
             # create and add pipeline with defined jobs
             pipelines += [

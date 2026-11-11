@@ -18,7 +18,7 @@ def test_jobs(series, channel, build_job):
     return jobs
 
 
-defs = dict(
+defs = struct(
     products = products,
     test_jobs = test_jobs,
 )
