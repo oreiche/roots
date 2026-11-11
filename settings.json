@@ -2,5 +2,25 @@
     "variables": [
         "series=stonking",
         "channel=daily"
-    ]
+    ],
+    "schedules": {
+        "resolute-dailies": {
+            "type": "run",
+            "cron": "30 17 * * *",
+            "config": {
+                "series": "resolute",
+                "channel": "daily"
+            },
+            "pipelines": ["ubuntu-mini-iso_live_amd64"]
+        },
+        "remove-dailies-after-2weeks": {
+            "type": "delete",
+            "cron": "00 18 * * *",
+            "config": {
+                "channel": "daily"
+            },
+            "since": "0",
+            "until": "2w"
+        }
+    }
 }
