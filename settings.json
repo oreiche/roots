@@ -9,7 +9,7 @@
             "config": {
                 "channel": "daily"
             },
-            "pipelines": ["ubuntu-mini-iso_live_amd64"]
+            "groups": ["image"]
         },
         "remove-dailies-after-2weeks": {
             "type": "delete",
