@@ -9,7 +9,9 @@
             "config": {
                 "channel": "daily"
             },
-            "groups": ["image"]
+            "groups": [
+                "image"
+            ]
         },
         "remove-dailies-after-2weeks": {
             "type": "delete",
@@ -17,8 +19,10 @@
             "config": {
                 "channel": "daily"
             },
-            "since": "0",
-            "until": "2w"
+            "date": {
+                "since": "-1",
+                "until": "2w"
+            }
         }
     }
 }
