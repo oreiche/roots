@@ -13,7 +13,7 @@
                 "image"
             ]
         },
-        "remove-dailies-after-2weeks": {
+        "remove-dailies-after-4weeks": {
             "type": "delete",
             "cron": "00 11 * * *",
             "config": {
@@ -21,7 +21,7 @@
             },
             "date": {
                 "since": "-1",
-                "until": "2w"
+                "until": "4w"
             }
         }
     }
